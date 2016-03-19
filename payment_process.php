@@ -5,11 +5,14 @@ ob_start();
 // include the payex lib files 
 include( plugin_dir_path( __FILE__ ) . 'settings.php');
 include( plugin_dir_path( __FILE__ ) . '/payex/PxOrder.php');
+
 class initializePayex
 {
     function initializePayex()
     {
+        $orderRef = '';
         $getid = $this->saveOrderdata();
+        if(isset($_REQUEST['orderRef']))
         $orderRef = $_REQUEST['orderRef'];
         if(is_numeric($getid))
         {

@@ -98,6 +98,7 @@ global $msg;
 	{  ?>
 			<div class="pmpro_message <?php echo $msg?>"><?php echo $msg; ?></div>
 	<?php } 
+	include( plugin_dir_path( __FILE__ ) . 'countries.php');
 	include( plugin_dir_path( __FILE__ ) . 'payment_page.php');		
 
 }

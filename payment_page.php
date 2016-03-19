@@ -14,38 +14,38 @@
 			<tr>
 				<td>
 					<div>
-						<label for="customamount"><?php _e('Guest Amount', 'pmpro');?>*</label>
-						<input id="customamount" name="customamount" type="text" class="input " size="30" value="<?php echo esc_attr($customamount)?>" />
+						<label for="subtotal"><?php _e('Guest Amount', 'pmpro');?>*</label>
+						<input id="subtotal" name="subtotal" type="text" class="input " size="30" value="" />
 					</div>
 					<div>
 						<label for="bfirstname"><?php _e('First Name', 'pmpro');?>*</label>
-						<input id="bfirstname" name="bfirstname" type="text" class="input " size="30" value="<?php echo esc_attr($bfirstname)?>"  />
+						<input id="bfirstname" name="bfirstname" type="text" class="input " size="30" value="" />
 					</div>
 					<div>
 						<label for="blastname"><?php _e('Last Name', 'pmpro');?>*</label>
-						<input id="blastname" name="blastname" type="text" class="input " size="30" value="<?php echo esc_attr($blastname)?>"  />
+						<input id="blastname" name="blastname" type="text" class="input " size="30" value=""  />
 					</div>
 					<div>
 						<label for="baddress1"><?php _e('Address 1', 'pmpro');?></label>
-						<input id="baddress1" name="baddress1" type="text" class="input " size="30" value="<?php echo esc_attr($baddress1)?>" />
+						<input id="baddress1" name="baddress1" type="text" class="input " size="30" value="" />
 					</div>
 					<div>
 						<label for="baddress2"><?php _e('Address 2', 'pmpro');?></label>
-						<input id="baddress2" name="baddress2" type="text" class="input " size="30" value="<?php echo esc_attr($baddress2)?>" />
+						<input id="baddress2" name="baddress2" type="text" class="input " size="30" value="" />
 					</div>
 
 				
 						<div>
 							<label for="bcity"><?php _e('City', 'pmpro');?></label>
-							<input id="bcity" name="bcity" type="text" class="input " size="30" value="<?php echo esc_attr($bcity)?>" />
+							<input id="bcity" name="bcity" type="text" class="input " size="30" value="" />
 						</div>
 						<div>
 							<label for="bstate"><?php _e('State', 'pmpro');?></label>
-							<input id="bstate" name="bstate" type="text" class="input " size="30" value="<?php echo esc_attr($bstate)?>" />
+							<input id="bstate" name="bstate" type="text" class="input " size="30" value="" />
 						</div>
 						<div>
 							<label for="bzipcode"><?php _e('Postal Code', 'pmpro');?></label>
-							<input id="bzipcode" name="bzipcode" type="text" class="input " size="30" value="<?php echo esc_attr($bzipcode)?>" />
+							<input id="bzipcode" name="bzipcode" type="text" class="input " size="30" value="" />
 						</div>
 					
 
@@ -56,12 +56,12 @@
 					?>
 					<div>
 						<label for="bcountry"><?php _e('Country', 'pmpro');?></label>
-						<select name="bcountry" class=" <?php echo pmpro_getClassForField("bcountry");?>">
+						<select name="bcountry" class="input select">
 							<?php
-								global $pmpro_countries, $pmpro_default_country;
+								global $countries, $default_country;
 								if(!$bcountry)
-									$bcountry = $pmpro_default_country;
-								foreach($pmpro_countries as $abbr => $country)
+									$bcountry = $default_country;
+								foreach($countries as $abbr => $country)
 								{
 								?>
 								<option value="<?php echo $abbr?>" <?php if($abbr == $bcountry) { ?>selected="selected"<?php } ?>><?php echo $country?></option>
@@ -81,12 +81,12 @@
 					?>
 					<div>
 						<label for="bphone"><?php _e('Phone', 'pmpro');?></label>
-						<input id="bphone" name="bphone" type="text" class="input " size="30" value="<?php echo esc_attr(formatPhone($bphone))?>" />
+						<input id="bphone" name="bphone" type="text" class="input " size="30" value="" />
 					</div>
 					
 					<div>
 						<label for="bemail"><?php _e('E-mail Address', 'pmpro');?>*</label>
-						<input id="bemail" name="bemail" type="<?php echo ($pmpro_email_field_type ? 'email' : 'text'); ?>" class="input " size="30" value="<?php echo esc_attr($bemail)?>"  />
+						<input id="bemail" name="bemail" type="email" class="input " size="30" value=""  />
 					</div>
 				
 				</td>
@@ -96,16 +96,16 @@
 	
 			
 
-		<div class="pmpro_submit">
+		<div class="submit">
 			
-			<span id="pmpro_submit_span">
+			<span id="submit_span">
 				<input type="hidden" name="submit-checkout" value="1" />
-				<input type="submit" name="save_payment" class="pmpro_btn pmpro_btn-submit-checkout" value="Go For Payment"/>
+				<input type="submit" name="save_payment" class="btn btn-submit" value="Go For Payment"/>
 			</span>
 			
-			<span id="pmpro_processing_message" style="visibility: hidden;">
+			<span id="processing_message" style="visibility: hidden;">
 				<?php
-					$processing_message = apply_filters("pmpro_processing_message", __("Processing...", "pmpro"));
+					$processing_message = apply_filters("processing_message", __("Processing...", "pmpro"));
 					echo $processing_message;
 				?>
 			</span>
@@ -122,14 +122,8 @@
 		// On submit disable its submit button
 		jQuery('input[type=submit]', this).attr('disabled', 'disabled');
 		jQuery('input[type=image]', this).attr('disabled', 'disabled');
-		jQuery('#pmpro_processing_message').css('visibility', 'visible');
+		jQuery('#processing_message').css('visibility', 'visible');
 	});
-
-	//unhighlight error fields when the user edits them
-	jQuery('.pmpro_error').bind("change keyup input", function() {
-		jQuery(this).removeClass('pmpro_error');
-	});
-
 
 	//add javascriptok hidden field to checkout
 	jQuery("input[name=submit-checkout]").after('<input type="hidden" name="javascriptok" value="1" />');
